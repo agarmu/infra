@@ -11,7 +11,7 @@ fmt:
     nixfmt shell.nix
     shfmt -w -ln bash .envrc
     mdformat README.md
-    yamlfmt .pre-commit-config.yaml .yamllint.yaml
+    yamlfmt -gitignore_excludes .
 
 # Run all pre-commit checks
 check:

@@ -25,6 +25,8 @@
   };
 
   flake.modules.nixos.base = { pkgs, ... }: {
+    programs.nh.enable = true;
+
     nix.settings.experimental-features = [
       "nix-command"
       "flakes"

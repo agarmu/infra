@@ -25,6 +25,7 @@
   };
 
   flake.modules.nixos.base = { pkgs, ... }: {
+    nix.package = pkgs.lix;
     nixpkgs.overlays = [ (final: _: import ../../pkgs final) ];
 
     programs.nh.enable = true;

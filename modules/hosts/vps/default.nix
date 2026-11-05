@@ -7,6 +7,7 @@
     ];
 
     nixpkgs.hostPlatform = "x86_64-linux";
+    hardware.facter.reportPath = ./facter.json;
     networking.useDHCP = true;
     time.timeZone = "America/New_York";
   };

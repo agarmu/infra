@@ -25,11 +25,17 @@
   };
 
   flake.modules.nixos.base = { pkgs, ... }: {
+    nixpkgs.overlays = [ (final: _: import ../../pkgs final) ];
+
     programs.nh.enable = true;
 
     nix.settings.experimental-features = [
       "nix-command"
       "flakes"
     ];
+  };
+
+  perSystem = { pkgs, ... }: {
+    packages = import ../../pkgs pkgs;
   };
 }

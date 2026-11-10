@@ -4,6 +4,13 @@
     {
       services.freshrss = {
         enable = true;
+        package = pkgs.symlinkJoin {
+          name = "freshrss-themed";
+          paths = [
+            pkgs.freshrss
+            pkgs.freshrss-catppuccin
+          ];
+        };
         baseUrl = "https://rss.agarmu.com";
         webserver = "caddy";
         virtualHost = "rss.agarmu.com";
@@ -11,12 +18,14 @@
         passwordFile = "/var/lib/freshrss/admin-password";
       };
 
-      # autogenerate password
       systemd.services.freshrss-config.preStart = ''
+        # Autogenerate the initial password.
         if [ ! -s /var/lib/freshrss/admin-password ]; then
           umask 077
           ${pkgs.openssl}/bin/openssl rand -base64 32 > /var/lib/freshrss/admin-password
         fi
+
+        install -Dm644 ${./config-user.custom.php} /var/lib/freshrss/config-user.custom.php
       '';
 
       services.phpfpm.pools.freshrss.settings = {
